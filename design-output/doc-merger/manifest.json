@@ -1,0 +1,26 @@
+{
+  "projectId": "bfeee739-8119-45e7-973f-9fb0643c8499",
+  "skillId": "frontend-design",
+  "designSystemId": "clean",
+  "brief": {
+    "purpose": "doc-merger 工具介面（Word/TXT 批次合併）",
+    "device": "desktop",
+    "tone": "乾淨、專業、易用",
+    "language": "繁體中文",
+    "features": [
+      "拖拽上傳區（最多 50 個 .docx / .txt）",
+      "檔案列表（可拖曳排序決定合併順序）",
+      "分隔符選項（兩個換行 / 分頁符 / 自訂）",
+      "輸出格式單選（Word / TXT）",
+      "合併按鈕 + 結果下載區",
+      "4 個百度聯盟廣告位占位（top-banner / sidebar / action-below / footer）"
+    ]
+  },
+  "createdAt": "2026-06-04",
+  "files": [
+    "index.html",
+    "assets/styles.css",
+    "assets/app.js"
+  ],
+  "notes": "由 opencode 直接生成（OpenDesign daemon 與 opencode CLI 的 session 相容性問題待官方修復）。原型已具備完整可運行的 UI/UX，下一步接 Vue 3 + Element Plus。"
+}

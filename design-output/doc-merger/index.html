@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>doc-merger — Word/TXT 批次合併工具</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <!-- 廣告位 #1：頂部 banner -->
+  <div class="ad-slot ad-top-banner" data-position="top-banner">
+    <span class="ad-label">廣告位 #1 · 頂部 banner</span>
+    <!-- 部署時替換為百度聯盟 script: <script src="//cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script> -->
+  </div>
+
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-logo">📄</span>
+      <div>
+        <h1>doc-merger</h1>
+        <p class="brand-sub">Word / TXT 批次合併工具</p>
+      </div>
+    </div>
+    <div class="header-stats">
+      <span class="stat-pill"><span id="fileCount">0</span> / 50 個檔案</span>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- 左側主工作區 -->
+    <section class="workspace">
+      <!-- 廣告位 #2：側欄（行動裝置隱藏） -->
+      <div class="ad-slot ad-sidebar" data-position="sidebar">
+        <span class="ad-label">廣告位 #2 · 側欄</span>
+      </div>
+
+      <!-- 拖拽上傳區 -->
+      <div class="card">
+        <div class="card-header">
+          <h2>① 上傳檔案</h2>
+          <span class="hint">支援 <code>.docx</code> 與 <code>.txt</code> 混合上傳</span>
+        </div>
+        <label id="dropzone" class="dropzone" for="fileInput">
+          <div class="dropzone-icon">⬆</div>
+          <div class="dropzone-text">
+            <strong>拖拽檔案到此處</strong>
+            <span>或 <u>點擊選擇檔案</u></span>
+          </div>
+          <small>單次最多 50 個檔案，每檔 ≤ 10MB</small>
+          <input id="fileInput" type="file" accept=".docx,.txt" multiple hidden />
+        </label>
+      </div>
+
+      <!-- 檔案列表 -->
+      <div class="card">
+        <div class="card-header">
+          <h2>② 排序檔案（合併順序）</h2>
+          <button class="link-btn" id="clearAll" hidden>清空全部</button>
+        </div>
+        <ul id="fileList" class="file-list" aria-live="polite"></ul>
+        <div id="emptyState" class="empty-state">
+          <p>尚未選擇任何檔案</p>
+        </div>
+      </div>
+
+      <!-- 合併選項 -->
+      <div class="card">
+        <div class="card-header">
+          <h2>③ 合併選項</h2>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label">分隔符</label>
+          <div class="radio-group" id="separatorGroup">
+            <label class="radio-pill">
+              <input type="radio" name="separator" value="newline" checked />
+              <span>兩個換行</span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="separator" value="page" />
+              <span>分頁符</span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="separator" value="custom" />
+              <span>自訂字串</span>
+            </label>
+          </div>
+          <input id="customSeparator" class="text-input" type="text" placeholder="輸入自訂分隔字串…" hidden />
+        </div>
+
+        <div class="form-row">
+          <label class="form-label">輸出格式</label>
+          <div class="radio-group">
+            <label class="radio-pill">
+              <input type="radio" name="format" value="docx" checked />
+              <span>Word (.docx)</span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="format" value="txt" />
+              <span>TXT (.txt)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 合併按鈕 -->
+      <div class="merge-zone">
+        <button id="mergeBtn" class="primary-btn" disabled>
+          <span class="btn-label">合併檔案</span>
+          <span class="btn-spinner" hidden></span>
+        </button>
+        <p id="mergeHint" class="muted">請先上傳至少一個檔案</p>
+      </div>
+
+      <!-- 廣告位 #3：合併按鈕下方 -->
+      <div class="ad-slot ad-action-below" data-position="action-below">
+        <span class="ad-label">廣告位 #3 · 合併按鈕下方</span>
+      </div>
+
+      <!-- 合併結果 -->
+      <div id="resultCard" class="card result-card" hidden>
+        <div class="card-header">
+          <h2>④ 下載結果</h2>
+        </div>
+        <p>合併完成，檔案大小：<strong id="resultSize">—</strong></p>
+        <a id="downloadLink" class="primary-btn download-btn" download>下載合併檔</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 廣告位 #4：頁面底部 -->
+  <div class="ad-slot ad-footer" data-position="footer">
+    <span class="ad-label">廣告位 #4 · 頁面底部</span>
+  </div>
+
+  <footer class="app-footer">
+    <p>doc-merger · 部署於 ICP 備案老域名 · 廣告由百度聯盟提供</p>
+  </footer>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
