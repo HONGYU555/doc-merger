@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Frontend
+frontend/dist/
+frontend/.vite/
+
+# Backend runtime
+backend/uploads/
+backend/outputs/
+backend/logs/
+backend/dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temp
+tmp/
+temp/
+*.tmp
+
+# Test
+coverage/
+.nyc_output/
