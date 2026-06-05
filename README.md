@@ -16,6 +16,16 @@ Word(.docx) 與 TXT 檔案批次合併工具，支援單次匯入 ≤50 個檔�
 - 輸出格式：Word、TXT
 - 廣告位：頂部 banner、側欄、合併按鈕下方、底部 footer
 
+## 開發狀態
+
+✅ **可運行**：前端 Vue3 + 後端 Express，端到端測試通過
+- API: `POST /api/merge` 上傳並合併
+- API: `GET /api/download/:id` 下載結果
+- 前端: `http://127.0.0.1:5173`
+- 後端: `http://127.0.0.1:3010`（3000 port 已被佔用故改 3010）
+
+⏳ **待完成**：百度聯盟廣告實際接入（已有占位 `<AdSlot>` 元件）
+
 ## 資料夾結構
 
 ```
@@ -63,13 +73,26 @@ doc-merger/
 ## 快速開始
 
 ```bash
-# 前端
+# 後端（port 3010）
+cd backend
+pnpm install
+pnpm start
+
+# 前端（port 5173，新終端）
 cd frontend
 pnpm install
 pnpm dev
+```
 
-# 後端（新終端）
+開啟 `http://127.0.0.1:5173` 開始使用。
+
+## 測試
+
+```bash
+# 後端：端到端合併測試（6 案例 + 1 拒絕測試）
 cd backend
-pnpm install
-pnpm dev
+node scripts/test-merge.mjs
+
+# 範例測試檔
+node scripts/generate-test-files.mjs
 ```

@@ -16,6 +16,9 @@ backend/uploads/
 backend/outputs/
 backend/logs/
 backend/dist/
+backend/test-files/
+backend/test-output/
+backend/node_modules/.cache/
 
 # Environment
 .env
@@ -49,3 +52,4 @@ temp/
 # Test
 coverage/
 .nyc_output/
+.playwright-mcp/
