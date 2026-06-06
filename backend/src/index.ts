@@ -1,8 +1,14 @@
 import express from 'express'
 import cors from 'cors'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { existsSync } from 'node:fs'
 import { mergeRouter } from './routes/merge.js'
 import { downloadRouter } from './routes/download.js'
 import { cleanupUploads } from './utils/cleanup.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 const PORT = Number(process.env.PORT) || 3010
@@ -13,10 +19,25 @@ app.use('/api', mergeRouter)
 app.use('/api', downloadRouter)
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok' })
+  res.json({
+    status: 'ok',
+    service: 'doc-merger',
+    timestamp: new Date().toISOString(),
+  })
 })
 
-// 啟動時清理舊檔，每 30 分鐘跑一次
+// 生产环境托管前端 dist（开发时不存在，不影响）
+const frontendDist = path.resolve(__dirname, '../../frontend/dist')
+if (existsSync(frontendDist)) {
+  app.use(express.static(frontendDist, { maxAge: '1h', index: 'index.html' }))
+  // SPA fallback：非 /api 路径都返回 index.html
+  app.get(/^(?!\/api).*/, (_req, res) => {
+    res.sendFile(path.join(frontendDist, 'index.html'))
+  })
+  console.log(`[doc-merger] serving frontend from ${frontendDist}`)
+}
+
+// 启动时清理旧檔，每 30 分钟跑一次
 cleanupUploads()
 setInterval(cleanupUploads, 30 * 60 * 1000)
 

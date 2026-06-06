@@ -1,55 +1,25 @@
-# Dependencies
-node_modules/
-.pnpm-store/
-
-# Build output
-dist/
-build/
-*.tsbuildinfo
-
-# Frontend
-frontend/dist/
-frontend/.vite/
-
-# Backend runtime
-backend/uploads/
-backend/outputs/
-backend/logs/
-backend/dist/
-backend/test-files/
-backend/test-output/
-backend/node_modules/.cache/
-
-# Environment
+# 环境变量
 .env
 .env.local
-.env.*.local
+.env.production
+.env.development
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# 测试与临时
+test-output/
+test-files/
+.playwright-mcp/
+*.log
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# 截图
+*.png
+!README.md
+!AGENTS.md
+
+# 系统
 .DS_Store
 Thumbs.db
-
-# Logs
-*.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS
-Desktop.ini
-$RECYCLE.BIN/
-
-# Temp
-tmp/
-temp/
-*.tmp
-
-# Test
-coverage/
-.nyc_output/
-.playwright-mcp/

@@ -30,10 +30,16 @@ const ACCEPTED_EXTS = ['.docx', '.txt']
 const fileCount = computed(() => files.value.length)
 const canMerge = computed(() => files.value.length > 0 && !isMerging.value)
 
+// 站点配置
+const ICP_NO = '粤ICP备2026071601号-1'
+const ICP_LINK = 'https://beian.miit.gov.cn/'
+const SITE_NAME = 'doc-merger'
+const SITE_DOMAIN = 'doc.hongyuai.top'
+
 function handleAdd(newFiles: File[]) {
   const remaining = MAX_FILES - files.value.length
   if (remaining <= 0) {
-    ElMessage.warning(`最多只能上傳 ${MAX_FILES} 個檔案`)
+    ElMessage.warning(`最多只能上传 ${MAX_FILES} 个档案`)
     return
   }
   let added = 0
@@ -46,7 +52,7 @@ function handleAdd(newFiles: File[]) {
       continue
     }
     if (f.size > MAX_FILE_SIZE) {
-      ElMessage.warning(`檔案 ${f.name} 超過 10MB 上限`)
+      ElMessage.warning(`档案 ${f.name} 超过 10MB 上限`)
       continue
     }
     files.value.push({
@@ -59,7 +65,7 @@ function handleAdd(newFiles: File[]) {
     added++
   }
   if (skipped > 0) {
-    ElMessage.warning(`已跳過 ${skipped} 個不支援的檔案（僅接受 .docx / .txt）`)
+    ElMessage.warning(`已跳过 ${skipped} 个不支援的档案（仅接受 .docx / .txt）`)
   }
 }
 
@@ -90,9 +96,9 @@ async function handleMerge() {
     fd.append('outputFormat', outputFormat.value)
     const res = await mergeFiles(fd)
     result.value = res
-    ElNotification.success(`合併完成：${res.filename}`)
+    ElNotification.success(`合并完成：${res.filename}`)
   } catch (err: any) {
-    ElMessage.error(`合併失敗：${err?.message || '未知錯誤'}`)
+    ElMessage.error(`合并失败：${err?.message || '未知错误'}`)
   } finally {
     isMerging.value = false
   }
@@ -100,34 +106,34 @@ async function handleMerge() {
 </script>
 
 <template>
-  <!-- 廣告位 #1：頂部 banner -->
-  <AdSlot position="top-banner" />
+  <!-- 广告位 #1：顶部 banner -->
+  <AdSlot position="top-banner" slot-id="top-banner" />
 
   <header class="app-header">
     <div class="brand">
       <span class="brand-logo">📄</span>
       <div>
-        <h1>doc-merger</h1>
-        <p class="brand-sub">Word / TXT 批次合併工具</p>
+        <h1>{{ SITE_NAME }}</h1>
+        <p class="brand-sub">Word / TXT 批次合并工具</p>
       </div>
     </div>
     <div class="header-stats">
       <span class="stat-pill">
-        <span class="stat-num">{{ fileCount }}</span> / {{ MAX_FILES }} 個檔案
+        <span class="stat-num">{{ fileCount }}</span> / {{ MAX_FILES }} 个档案
       </span>
     </div>
   </header>
 
   <main class="app-main">
     <section class="workspace">
-      <!-- 廣告位 #2：側欄 -->
-      <AdSlot position="sidebar" />
+      <!-- 广告位 #2：侧栏 -->
+      <AdSlot position="sidebar" slot-id="sidebar" />
 
       <el-card class="section-card" shadow="never">
         <template #header>
           <div class="section-header">
-            <span>① 上傳檔案</span>
-            <small class="hint">支援 <code>.docx</code> 與 <code>.txt</code> 混合上傳</small>
+            <span>① 上传档案</span>
+            <small class="hint">支援 <code>.docx</code> 与 <code>.txt</code> 混合上传</small>
           </div>
         </template>
         <Uploader
@@ -141,7 +147,7 @@ async function handleMerge() {
       <el-card class="section-card" shadow="never">
         <template #header>
           <div class="section-header">
-            <span>② 排序檔案（合併順序）</span>
+            <span>② 排序档案（合并顺序）</span>
             <el-button
               v-if="files.length > 0"
               link
@@ -160,7 +166,7 @@ async function handleMerge() {
       <el-card class="section-card" shadow="never">
         <template #header>
           <div class="section-header">
-            <span>③ 合併選項</span>
+            <span>③ 合并选项</span>
           </div>
         </template>
         <MergeOptions
@@ -179,24 +185,27 @@ async function handleMerge() {
           @click="handleMerge"
           class="primary-btn"
         >
-          {{ isMerging ? '合併中…' : '合併檔案' }}
+          {{ isMerging ? '合并中…' : '合并档案' }}
         </el-button>
-        <p class="muted" v-if="files.length === 0">請先上傳至少一個檔案</p>
-        <p class="muted" v-else>準備合併 {{ files.length }} 個檔案</p>
+        <p class="muted" v-if="files.length === 0">请先上传至少一个档案</p>
+        <p class="muted" v-else>准备合并 {{ files.length }} 个档案</p>
       </div>
 
-      <!-- 廣告位 #3：合併按鈕下方 -->
-      <AdSlot position="action-below" />
+      <!-- 广告位 #3：合并按钮下方 -->
+      <AdSlot position="action-below" slot-id="action-below" />
 
       <ResultCard v-if="result" :result="result" />
     </section>
   </main>
 
-  <!-- 廣告位 #4：頁面底部 -->
-  <AdSlot position="footer" />
+  <!-- 广告位 #4：页面底部 -->
+  <AdSlot position="footer" slot-id="footer" />
 
   <footer class="app-footer">
-    <p>doc-merger · 部署於 ICP 備案老域名 · 廣告由百度聯盟提供</p>
+    <p class="footer-line">
+      <a :href="ICP_LINK" target="_blank" rel="noopener noreferrer">{{ ICP_NO }}</a>
+    </p>
+    <p class="footer-line">{{ SITE_NAME }} · 部署于 {{ SITE_DOMAIN }} · 广告由百度联盟提供</p>
   </footer>
 </template>
 
@@ -218,4 +227,8 @@ async function handleMerge() {
 }
 .merge-zone { display: flex; flex-direction: column; align-items: center; margin: 32px 0; }
 .primary-btn { min-width: 200px; }
+.app-footer { text-align: center; padding: 24px 16px; color: #666; font-size: 13px; }
+.footer-line { margin: 4px 0; }
+.app-footer a { color: #666; text-decoration: none; }
+.app-footer a:hover { color: #333; text-decoration: underline; }
 </style>

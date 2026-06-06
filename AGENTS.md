@@ -85,11 +85,25 @@ doc-merger/
 | 位置 | 路徑 |
 |------|------|
 | 程式碼 | https://github.com/HONGYU555/doc-merger |
+| 程式碼鏡像 | https://gitee.com/HONGYU555/doc-merger |
 | 工作筆記 | `C:\Users\lyj14\Documents\Obsidian\创作库\doc-merger\` |
 | 設定檔 | `opencode.json` |
 | 設計產出 | `C:\Users\lyj14\Desktop\opencode\opendesign\artifacts\` |
 | OpenDesign 啟動 | `start-design.bat`（專案根目錄） |
 | 本地專案目錄 | `C:\Users\lyj14\Desktop\opencode\word--\txt-merge\`（資料夾名仍為 txt-merge，repo 名為 doc-merger） |
+
+## 部署資訊
+
+| 項 | 值 |
+|---|---|
+| 域名 | `doc.hongyuai.top`（第一階段）；後續 `*.hongyuai.top` 透過泛解析自動支援 |
+| 備案號 | 粵ICP備2026071601號-1 |
+| 站點類型 | 個人輕量工具站 |
+| 伺服器 | 阿里雲 ECS + 寶塔面板 |
+| 反向代理 | Nginx (寶塔) → 127.0.0.1:3010 (Node.js) |
+| 進程守護 | PM2 (主服務 + webhook 接收器) |
+| 自動部署 | GitHub → Gitee 鏡像 → Gitee Webhook → VPS `deploy.sh` |
+| 部署指南 | `deploy/baota-deploy.md` |
 
 ## 開發指令
 
@@ -103,8 +117,14 @@ pnpm build          # 產出到 frontend/dist
 # 後端
 cd backend
 pnpm install
-pnpm dev            # nodemon 啟動，預設 http://localhost:3000
-pnpm start          # 正式環境
+pnpm dev            # nodemon 啟動，預設 http://localhost:3010
+pnpm start          # 正式環境（先跑 pnpm exec tsc）
+
+# 部署
+cd deploy
+./deploy.sh                     # 從 Gitee 鏡像拉取並部署
+pm2 status                      # 查看進程
+pm2 logs doc-merger             # 查看日誌
 ```
 
 ## 開發注意事項

@@ -37,9 +37,10 @@ function decodeText(buf: Buffer): string {
   const utf8 = buf.toString('utf8')
   const replacementCount = (utf8.match(/\uFFFD/g) || []).length
   if (replacementCount / utf8.length < 0.01) return utf8
-  // fallback: GBK
+  // fallback: GBK（Node.js 標準庫不支援 gbk encoding，用 iconv-lite 風格的 Buffer 轉換）
   try {
-    return buf.toString('gbk')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (buf as any).toString('gbk') as string
   } catch {
     return utf8
   }

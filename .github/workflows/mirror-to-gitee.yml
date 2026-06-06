@@ -1,0 +1,29 @@
+name: Mirror to Gitee
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror GitHub → Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          API_KEY_GITHUB: ${{ secrets.GH_PAT }}
+        with:
+          source-repo: github.com/HONGYU555/doc-merger
+          destination-repo: gitee.com/HONGYU555/doc-merger
+
+# 备用方案（如果 wearerequired 镜像 action 不可用）：
+#   - uses: actions/checkout@v4
+#     with:
+#       fetch-depth: 0
+#   - name: Push to Gitee
+#     run: |
+#       git config user.name "github-actions[bot]"
+#       git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#       git remote add gitee https://HONGYU555:${{ secrets.GITEE_TOKEN }}@gitee.com/HONGYU555/doc-merger.git
+#       git push -f gitee main
