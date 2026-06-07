@@ -38,7 +38,7 @@ export default {
       env: {
         NODE_ENV: 'production',
         WEBHOOK_PORT: 9000,
-        WEBHOOK_TOKEN: 'replace-with-random-string',
+        WEBHOOK_TOKEN: 'iM9ICX64YKstv1BN0er32Z7OjxobQz5p',
         DEPLOY_SCRIPT: '/www/wwwroot/doc-merger/deploy/deploy.sh',
         REPO_FILTER: 'doc-merger',
         BRANCH: 'main',
@@ -46,7 +46,7 @@ export default {
       env_production: {
         NODE_ENV: 'production',
         WEBHOOK_PORT: 9000,
-        WEBHOOK_TOKEN: 'replace-with-random-string',
+        WEBHOOK_TOKEN: 'iM9ICX64YKstv1BN0er32Z7OjxobQz5p',
         DEPLOY_SCRIPT: '/www/wwwroot/doc-merger/deploy/deploy.sh',
         REPO_FILTER: 'doc-merger',
         BRANCH: 'main',
