@@ -74,10 +74,10 @@ log "  frontend/dist 已生成"
 log "STEP 5/6: pm2 reload"
 cd "$APP_DIR/deploy"
 if pm2 list | grep -q "doc-merger"; then
-  pm2 reload ecosystem.config.js --env production
+  pm2 reload ecosystem.config.cjs --env production
   log "  pm2 reload 完成"
 else
-  pm2 start ecosystem.config.js --env production
+  pm2 start ecosystem.config.cjs --env production
   pm2 save
   log "  pm2 首次启动完成，已保存进程列表"
 fi
@@ -85,7 +85,7 @@ fi
 # 6. 健康检查
 log "STEP 6/6: 健康检查"
 sleep 2
-HEALTH=$(curl -fsS http://127.0.0.1:3010/api/health || echo "FAIL")
+HEALTH=$(curl -fsS http://127.0.0.1:3011/api/health || echo "FAIL")
 if echo "$HEALTH" | grep -q '"status":"ok"'; then
   log "  ✅ 健康检查通过: $HEALTH"
 else

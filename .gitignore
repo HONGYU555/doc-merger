@@ -10,6 +10,11 @@ test-files/
 .playwright-mcp/
 *.log
 
+# Playwright 浏览器自动化快照（调试用，不入库）
+bt-*.yml
+snapshot-*.yml
+page-*.yml
+
 # Node
 node_modules/
 dist/

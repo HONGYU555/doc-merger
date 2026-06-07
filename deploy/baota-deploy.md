@@ -216,7 +216,7 @@ cp backend/.env.example backend/.env
 ```bash
 nano backend/.env
 # 按 i 进入编辑模式
-# 确认 PORT=3010
+# 确认 PORT=3011
 # 按 ESC，输入 :wq 回车保存退出
 ```
 

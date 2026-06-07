@@ -1,15 +1,18 @@
 // Gitee Webhook 接收器
 // 监听 :9000，验签后调 deploy.sh
-// 启动: pm2 start ecosystem.config.js
+// 启动: pm2 start ecosystem.config.cjs
+//
+// 使用 CommonJS 语法以兼容 PM2（PM2 对 ESM 支持有限）
 
-import http from 'node:http'
-import { spawn } from 'node:child_process'
-import crypto from 'node:crypto'
+const http = require('node:http')
+const { spawn } = require('node:child_process')
+const crypto = require('node:crypto')
 
 const PORT = Number(process.env.WEBHOOK_PORT) || 9000
 const TOKEN = process.env.WEBHOOK_TOKEN || 'replace-with-random-string'
 const DEPLOY_SCRIPT = process.env.DEPLOY_SCRIPT || '/www/wwwroot/doc-merger/deploy/deploy.sh'
 const REPO_FILTER = process.env.REPO_FILTER || '' // 空 = 不过滤；填 'doc-merger' 只接受该仓库
+const BRANCH = process.env.BRANCH || 'main'
 
 function log(msg) {
   console.log(`[${new Date().toISOString()}] ${msg}`)
@@ -70,9 +73,9 @@ const server = http.createServer(async (req, res) => {
       return
     }
 
-    // 3. 只接受 push 事件
-    if (data.ref && !data.ref.endsWith('/' + (process.env.BRANCH || 'main'))) {
-      log(`SKIP: branch ${data.ref} 非主分支`)
+    // 3. 只接受 push 事件 + 主分支
+    if (data.ref && !data.ref.endsWith('/' + BRANCH)) {
+      log(`SKIP: branch ${data.ref} 非主分支 (${BRANCH})`)
       res.writeHead(200, { 'Content-Type': 'application/json' })
       res.end(JSON.stringify({ ok: true, skipped: true }))
       return
