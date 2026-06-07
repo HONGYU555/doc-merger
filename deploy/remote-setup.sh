@@ -12,9 +12,10 @@ WEBHOOK_TOKEN="iM9ICX64YKstv1BN0er32Z7OjxobQz5p"
 
 echo "=== doc-merger 远程一键部署 ==="
 
-# 1. 确保目录可写
+# 1. 确保目录可写（宝塔 .user.ini 有 immutable 属性，需先移除）
 if [ -d "$APP_DIR" ]; then
   echo "[1/8] 清理旧目录..."
+  chattr -i "$APP_DIR/.user.ini" 2>/dev/null || true
   rm -rf "$APP_DIR"
 fi
 
