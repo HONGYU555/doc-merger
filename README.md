@@ -6,7 +6,7 @@ Word(.docx) 与 TXT 文件批次合并工具，单次最多 50 个文件，内�
 
 | 项 | 值 |
 |---|---|
-| 域名 | `doc.hongyuai.top` |
+| 域名 | `hongyuai.top/doc-merger/`（子路徑方案） |
 | 备案号 | 粤ICP备2026071601号-1 |
 | 站点类型 | 个人轻量工具站 |
 | 服务器 | 阿里云 ECS + 宝塔面板 |
@@ -94,17 +94,17 @@ pnpm dev
 
 参见 [deploy/baota-deploy.md](deploy/baota-deploy.md)，完整步骤涵盖：
 
-1. DNS 解析
-2. 宝塔面板添加站点
+1. DNS 解析（`@` → 服务器 IP，1 条 A 记录）
+2. 宝塔面板添加站点 `hongyuai.top`
 3. SSL 申请（Let's Encrypt）
-4. Nginx 反向代理配置
+4. Nginx 反向代理配置（全量代理到 `127.0.0.1:3011`）
 5. Gitee SSH 公钥配置
 6. clone 代码到 `/www/wwwroot/doc-merger`
 7. 首次手动部署
 8. 配置 Webhook 接收器
 9. 配置 Gitee → GitHub 自动镜像
 
-部署后访问 `https://doc.hongyuai.top`。
+部署后访问 `https://hongyuai.top/doc-merger/`。
 
 ## 部署架构
 

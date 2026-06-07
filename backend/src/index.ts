@@ -29,9 +29,9 @@ app.get('/api/health', (_req, res) => {
 // 生产环境托管前端 dist（开发时不存在，不影响）
 const frontendDist = path.resolve(__dirname, '../../frontend/dist')
 if (existsSync(frontendDist)) {
-  app.use(express.static(frontendDist, { maxAge: '1h', index: 'index.html' }))
-  // SPA fallback：非 /api 路径都返回 index.html
-  app.get(/^(?!\/api).*/, (_req, res) => {
+  app.use('/doc-merger', express.static(frontendDist, { maxAge: '1h', index: 'index.html' }))
+  // SPA fallback：/doc-merger/* 返回 index.html，其他走根路径首页
+  app.get('/doc-merger/*', (_req, res) => {
     res.sendFile(path.join(frontendDist, 'index.html'))
   })
   console.log(`[doc-merger] serving frontend from ${frontendDist}`)

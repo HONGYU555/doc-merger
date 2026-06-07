@@ -96,11 +96,11 @@ doc-merger/
 
 | 項 | 值 |
 |---|---|
-| 域名 | `doc.hongyuai.top`（第一階段）；後續 `*.hongyuai.top` 透過泛解析自動支援 |
+| 域名 | `hongyuai.top/doc-merger/`（子路徑方案，初期不開子域名）；後續 `*.hongyuai.top` 再決定是否用 |
 | 備案號 | 粵ICP備2026071601號-1 |
 | 站點類型 | 個人輕量工具站 |
 | 伺服器 | 阿里雲 ECS + 寶塔面板 |
-| 反向代理 | Nginx (寶塔) → 127.0.0.1:3010 (Node.js) |
+| 反向代理 | Nginx (寶塔) → 127.0.0.1:3011 (Node.js) |
 | 進程守護 | PM2 (主服務 + webhook 接收器) |
 | 自動部署 | GitHub → Gitee 鏡像 → Gitee Webhook → VPS `deploy.sh` |
 | 部署指南 | `deploy/baota-deploy.md` |

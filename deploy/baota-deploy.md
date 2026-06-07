@@ -1,12 +1,12 @@
-# 宝塔面板部署指南（doc-merger → doc.hongyuai.top）
+# 宝塔面板部署指南（doc-merger → hongyuai.top/doc-merger）
 
-> 目标：本地 push GitHub → Gitee 自动镜像 → Webhook 触发 VPS 部署 → `doc.hongyuai.top` 上线
+> 目标：本地 push GitHub → Gitee 自动镜像 → Webhook 触发 VPS 部署 → `hongyuai.top/doc-merger` 上线
 
 ---
 
 ## 0. 前提
 
-- 阿里云 ECS（已备案 IP）
+- 阿里云轻量应用服务器（已备案 IP）
 - 宝塔面板已安装（`https://your-server-ip:8888`）
 - 域名 `hongyuai.top` 在阿里云 / 腾讯云 / Cloudflare 等 DNS 服务商
 
@@ -16,10 +16,9 @@
 
 | 主机记录 | 记录类型 | 记录值 |
 |---|---|---|
-| `@` | A | `<你的 ECS 公网 IP>` |
-| `doc` | A | `<你的 ECS 公网 IP>` |
+| `@` | A | `<你的轻量服务器公网 IP>` |
 
-> 第一阶段只建 `doc.hongyuai.top`，先不加泛解析。
+> 只需要 1 条 A 记录。子路径 `/doc-merger` 由 Nginx 路由，无需子域名。
 
 ## 2. 宝塔面板一次性配置
 
@@ -31,27 +30,27 @@
 
 ### 2.2 创建站点
 宝塔面板 → 网站 → 添加站点：
-- 域名：`doc.hongyuai.top`
+- 域名：`hongyuai.top`
 - 备注：doc-merger
-- 根目录：`/www/wwwroot/doc.hongyuai.top`（先建着，后面用 Node 接管）
+- 根目录：`/www/wwwroot/doc-merger`（先建着，后面用 Node 接管）
 - 数据库：不创建
 - PHP：纯静态
 - SSL：稍后申请 Let's Encrypt
 - 站点状态：启用
 
 ### 2.3 申请 SSL
-宝塔面板 → 网站 → `doc.hongyuai.top` → 设置 → SSL：
+宝塔面板 → 网站 → `hongyuai.top` → 设置 → SSL：
 - 选 **Let's Encrypt** → 申请
 - 申请成功后开启 **强制 HTTPS**
 
 ### 2.4 修改 Nginx 配置
-宝塔面板 → 网站 → `doc.hongyuai.top` → 设置 → 反向代理：
+宝塔面板 → 网站 → `hongyuai.top` → 设置 → 反向代理：
 - 代理名称：doc-merger
-- 目标 URL：`http://127.0.0.1:3010`
+- 目标 URL：`http://127.0.0.1:3011`
 - 发送域名：`$host`
-- 代理目录：留空
+- 代理目录：留空（**全部流量**都转给 Node.js）
 
-> 宝塔会自动写好 Nginx 配置文件。无需手动改 conf。
+> 宝塔会自动写好 Nginx 配置文件。Express 同时处理 `/api`（后端接口）和 `/doc-merger`（前端静态资源），无需单独配置。
 
 ## 3. 部署代码
 
@@ -94,7 +93,7 @@ chmod +x deploy/deploy.sh
 ./deploy/deploy.sh --force
 ```
 
-完成后访问 `http://doc.hongyuai.top` 即可看到页面。
+完成后访问 `https://hongyuai.top/doc-merger/` 即可看到页面。
 
 ## 4. Webhook 自动部署
 
@@ -134,7 +133,9 @@ Gitee 仓库 `HONGYU555/doc-merger` → 管理 → Webhooks → 添加：
 
 测试：点「测试」按钮 → 应返回 `{"ok":true,"message":"deploy started"}`
 
-## 5. GitHub → Gitee 自动镜像
+## 5. GitHub → Gitee 自动镜像（第一阶段暂不需要）
+
+> 第一阶段用 Gitee Webhook 即可。GitHub → Gitee 自动镜像待海外站上线后配置。
 
 ### 方式 A：Gitee 自动同步（推荐，最简单）
 Gitee 仓库 → 管理 → 仓库设置 → 同步设置：

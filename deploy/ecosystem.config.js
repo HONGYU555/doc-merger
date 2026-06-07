@@ -16,11 +16,11 @@ export default {
       max_memory_restart: '512M',
       env: {
         NODE_ENV: 'production',
-        PORT: 3010,
+        PORT: 3011,
       },
       env_production: {
         NODE_ENV: 'production',
-        PORT: 3010,
+        PORT: 3011,
       },
       error_file: '/var/log/pm2/doc-merger-error.log',
       out_file: '/var/log/pm2/doc-merger-out.log',
